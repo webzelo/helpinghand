@@ -7,8 +7,8 @@ import { cn } from "cn";
 
 const navLinks = [
   { href: "/events", label: "Upcoming Events" },
-  { href: "/events/create", label: "Create Event" },
-  { href: "/events/manage", label: "Manage Events" },
+  { href: "/create-event", label: "Create Event" },
+  { href: "/manage-events", label: "Manage Events" },
   { href: "/events/joined", label: "Joined Events" },
 ];
 

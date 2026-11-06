@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
+import { Navbar } from "@/components/navbar";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${dmSans.variable} ${dmSerifDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Navbar />
         {children}
         <SiteFooter />
       </body>

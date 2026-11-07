@@ -29,7 +29,14 @@ export function EventCarousel({ events }: { events: Event[] }) {
             key={event._id}
             className="basis-full pl-4 sm:basis-1/2 lg:basis-1/3"
           >
-            <Card className="h-full gap-0 rounded-2xl bg-[#20211d] py-0 text-[#f4f4ec] ring-white/10 transition-colors hover:ring-white/25">
+            <Card className="relative h-full gap-0 rounded-2xl bg-[#20211d] py-0 text-[#f4f4ec] ring-white/10 transition-colors focus-within:ring-[#c8d9b5]/60 hover:ring-white/25">
+              {/* Card-wide link; the footer stays above it so Edit still works. */}
+              <Link
+                href={`/manage-events/${event._id}`}
+                aria-label={`View details for ${event.title}`}
+                className="absolute inset-0 z-0 rounded-2xl outline-none"
+              />
+
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#262722]">
                 {/* Thumbnails are arbitrary URLs, so next/image has no fixed allow-list. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -37,7 +44,7 @@ export function EventCarousel({ events }: { events: Event[] }) {
                   src={event.thumbnail}
                   alt={event.title}
                   loading="lazy"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-[1.03]"
                 />
 
                 <Badge
@@ -49,7 +56,7 @@ export function EventCarousel({ events }: { events: Event[] }) {
               </div>
 
               <CardHeader className="px-4 pt-4">
-                <CardTitle className="line-clamp-2 font-heading text-xl leading-snug text-[#f5f4ec]">
+                <CardTitle className="line-clamp-2 font-heading text-xl leading-snug text-[#f5f4ec] group-hover/card:underline">
                   {event.title}
                 </CardTitle>
               </CardHeader>
@@ -70,7 +77,7 @@ export function EventCarousel({ events }: { events: Event[] }) {
                 </p>
               </CardContent>
 
-              <CardFooter className="mt-auto border-white/10 bg-transparent px-4 py-4">
+              <CardFooter className="relative z-10 mt-auto border-white/10 bg-transparent px-4 py-4">
                 <Button
                   render={<Link href={`/manage-events/${event._id}/edit`} />}
                   className="h-10 w-full rounded-full bg-[#c8d9b5] text-sm font-semibold text-[#1b2415] hover:bg-[#d7e4c7]"

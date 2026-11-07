@@ -64,7 +64,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
         throw new Error(data?.message || "Failed to update the event.");
       }
 
-      router.push("/manage-events");
+      router.push(`/manage-events/${event._id}`);
       router.refresh();
     } catch (error) {
       setSubmissionError(
@@ -215,7 +215,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button
-            render={<Link href="/manage-events" />}
+            render={<Link href={`/manage-events/${event._id}`} />}
             variant="ghost"
             className="h-11 rounded-full px-5 text-sm text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]"
           >

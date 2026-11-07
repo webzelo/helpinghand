@@ -40,11 +40,11 @@ export default async function EditEventPage({
       <main className="flex-1">
         <div className="mx-auto max-w-[900px] px-5 py-16 sm:px-6 lg:py-20">
           <Link
-            href="/manage-events"
+            href={`/manage-events/${id}`}
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#a4a59c] transition-colors hover:text-[#f4f4ec]"
           >
             <ArrowLeft className="size-3.5" />
-            Back to manage events
+            Back to event details
           </Link>
 
           {/* Page Header */}

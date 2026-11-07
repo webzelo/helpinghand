@@ -1,11 +1,27 @@
-"use client"
+
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
 import { Menu, Moon, Sun, X } from "lucide-react";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { Button } from "./ui/button";
 
 const navLinks = [
   { href: "/events", label: "Upcoming Events" },
@@ -28,8 +44,12 @@ export function Navbar() {
     setIsDark((current) => !current);
   }
 
-  const {data: session} = authClient.useSession() 
-  const user = session?.user 
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const handleLogout = () => {
+    authClient.signOut();
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#1a1b18]/90 backdrop-blur-md">
@@ -42,6 +62,7 @@ export function Navbar() {
           <span className="grid size-9 place-items-center rounded-full bg-[#c8d9b5] font-heading text-xl leading-none text-[#1b2415]">
             H
           </span>
+
           <span className="font-heading text-[26px] leading-none tracking-tight text-[#f4f4ec]">
             Helping Hand
           </span>
@@ -57,43 +78,91 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 "text-[13px] font-medium transition-colors hover:text-[#f4f4ec]",
-                index === 0 ? "text-[#f4f4ec]" : "text-[#a8a99f]"
+                index === 0
+                  ? "text-[#f4f4ec]"
+                  : "text-[#a8a99f]"
               )}
             >
               {link.label}
             </Link>
           ))}
 
-          <span className="h-4 w-px bg-white/10" aria-hidden="true" />
+          <span
+            className="h-4 w-px bg-white/10"
+            aria-hidden="true"
+          />
 
-          {authLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-[13px] font-medium text-[#a8a99f] transition-colors hover:text-[#f4f4ec]"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {user ? (
+            <Popover>
+              <PopoverTrigger
+                render={
+                  <Avatar>
+                    <AvatarImage src={user?.image as string} />
+                    <AvatarFallback>
+                      {user?.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                }
+              >
+                Open Popover
+              </PopoverTrigger>
+
+              <PopoverContent>
+                <PopoverHeader>
+                  <PopoverTitle>
+                    {user?.name}
+                  </PopoverTitle>
+
+                  <PopoverDescription>
+                    {user?.email}
+                  </PopoverDescription>
+                </PopoverHeader>
+
+                <Button
+                  onClick={handleLogout}
+                  variant="destructive"
+                >
+                  LogOut
+                </Button>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <>
+              {authLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-[13px] font-medium text-[#a8a99f] transition-colors hover:text-[#f4f4ec]"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </>
+          )}
         </nav>
-
-        <Avatar>
-        <AvatarImage src={user?.image as string} />
-        <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
-        </Avatar>
 
         <div className="flex items-center gap-2.5">
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+            aria-label={
+              isDark
+                ? "Switch to light theme"
+                : "Switch to dark theme"
+            }
             aria-pressed={isDark}
             className="hidden size-9 cursor-pointer place-items-center rounded-full border border-white/10 text-[#d7d8cf] transition-colors hover:border-white/20 hover:bg-white/5 sm:grid"
           >
             {isDark ? (
-              <Sun className="size-[17px]" strokeWidth={1.6} />
+              <Sun
+                className="size-[17px]"
+                strokeWidth={1.6}
+              />
             ) : (
-              <Moon className="size-[17px]" strokeWidth={1.6} />
+              <Moon
+                className="size-[17px]"
+                strokeWidth={1.6}
+              />
             )}
           </button>
 
@@ -107,16 +176,26 @@ export function Navbar() {
 
           <button
             type="button"
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() =>
+              setMenuOpen((open) => !open)
+            }
+            aria-label={
+              menuOpen ? "Close menu" : "Open menu"
+            }
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             className="grid size-9 cursor-pointer place-items-center rounded-full border border-white/10 text-[#d7d8cf] transition-colors hover:border-white/20 hover:bg-white/5 lg:hidden"
           >
             {menuOpen ? (
-              <X className="size-[18px]" strokeWidth={1.6} />
+              <X
+                className="size-[18px]"
+                strokeWidth={1.6}
+              />
             ) : (
-              <Menu className="size-[18px]" strokeWidth={1.6} />
+              <Menu
+                className="size-[18px]"
+                strokeWidth={1.6}
+              />
             )}
           </button>
         </div>
@@ -127,7 +206,10 @@ export function Navbar() {
           id="mobile-menu"
           className="border-t border-white/[0.07] bg-[#1a1b18] px-5 pb-5 pt-3 lg:hidden"
         >
-          <nav className="flex flex-col" aria-label="Mobile navigation">
+          <nav
+            className="flex flex-col"
+            aria-label="Mobile navigation"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}

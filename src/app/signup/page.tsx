@@ -1,4 +1,8 @@
 "use client"
+
+import * as React from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,29 +19,38 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
-import Link from "next/link"
-import { redirect } from "next/navigation"
 
 export default function SignUp() {
+  const router = useRouter()
 
-  const handleEmailSignUp = async(e:React.SubmitEvent<HTMLElement>) => {
-      e.preventDefault()
+  const [error, setError] = React.useState("")
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
 
-      const formData = new FormData(e.target)
-      const user = Object.fromEntries(formData.entries()) as {name:string, image:string, email:string, password:string}
+  const handleEmailSignUp = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault()
 
-      console.log(user)
+    setError("")
+    setIsSubmitting(true)
 
-      const {data, error} = await authClient.signUp.email({
-        ...user, 
-      })
+    const formData = new FormData(e.currentTarget)
 
-      if(data) {
-        redirect('/')
-      }
-      if(error) {
-        console.log(error)
-      }
+    const { error: signUpError } = await authClient.signUp.email({
+      name: String(formData.get("name") ?? ""),
+      image: String(formData.get("image") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      password: String(formData.get("password") ?? ""),
+    })
+
+    if (signUpError) {
+      setError(signUpError.message || "Could not create your account.")
+      setIsSubmitting(false)
+      return
+    }
+
+    // Sign up succeeded — go to the homepage.
+    router.replace("/")
   }
 
   return (
@@ -53,7 +66,7 @@ export default function SignUp() {
           <form onSubmit={handleEmailSignUp}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="email">Name</FieldLabel>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
                 <Input
                   id="name"
                   type="text"
@@ -63,7 +76,7 @@ export default function SignUp() {
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="email">ImageURL</FieldLabel>
+                <FieldLabel htmlFor="image">ImageURL</FieldLabel>
                 <Input
                   id="image"
                   type="url"
@@ -95,7 +108,14 @@ export default function SignUp() {
                 <Input id="password" name="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit">SignUp</Button>
+                {error && (
+                  <p role="alert" className="text-sm text-destructive">
+                    {error}
+                  </p>
+                )}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Signing up…" : "SignUp"}
+                </Button>
                 <FieldDescription className="text-center">
                   Have an account? <Link href="/login">Login</Link>
                 </FieldDescription>

@@ -1,4 +1,8 @@
 "use client"
+
+import * as React from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,29 +19,36 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
-import Link from "next/link"
-import { redirect } from "next/navigation"
 
 export default function Login() {
+  const router = useRouter()
 
-  const handleEmailLogin = async(e:React.SubmitEvent<HTMLElement>) => {
-      e.preventDefault()
+  const [error, setError] = React.useState("")
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
 
-      const formData = new FormData(e.target)
-      const user = Object.fromEntries(formData.entries()) as {email:string, password:string}
+  const handleEmailLogin = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault()
 
-      console.log(user)
+    setError("")
+    setIsSubmitting(true)
 
-      const {data, error} = await authClient.login.email({
-        ...user, 
-      })
+    const formData = new FormData(e.currentTarget)
 
-      if(data) {
-        redirect('/')
-      }
-      if(error) {
-        console.log(error)
-      }
+    const { error: loginError } = await authClient.signIn.email({
+      email: String(formData.get("email") ?? ""),
+      password: String(formData.get("password") ?? ""),
+    })
+
+    if (loginError) {
+      setError(loginError.message || "Invalid email or password.")
+      setIsSubmitting(false)
+      return
+    }
+
+    // Login succeeded — go to the homepage.
+    router.replace("/")
   }
 
   return (
@@ -75,7 +86,14 @@ export default function Login() {
                 <Input id="password" name="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                {error && (
+                  <p role="alert" className="text-sm text-destructive">
+                    {error}
+                  </p>
+                )}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Logging in…" : "Login"}
+                </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link href="/signup">SignUp</Link>
                 </FieldDescription>

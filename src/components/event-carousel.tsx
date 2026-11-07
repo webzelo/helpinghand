@@ -19,9 +19,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { DeleteEventButton } from "@/components/delete-event-button";
+import { JoinButton } from "@/components/join-button";
 import { formatEventDate, type Event } from "@/lib/events";
 
-export function EventCarousel({ events }: { events: Event[] }) {
+export function EventCarousel({
+  events,
+  userId,
+}: {
+  events: Event[];
+  userId?: string;
+}) {
   return (
     <Carousel opts={{ align: "start", loop: false }} className="w-full">
       <CarouselContent>
@@ -78,19 +85,28 @@ export function EventCarousel({ events }: { events: Event[] }) {
                 </p>
               </CardContent>
 
-              <CardFooter className="relative z-10 mt-auto gap-2 border-white/10 bg-transparent px-4 py-4">
-                <Button
-                  render={<Link href={`/manage-events/${event._id}/edit`} />}
-                  className="h-10 flex-1 rounded-full bg-[#c8d9b5] text-sm font-semibold text-[#1b2415] hover:bg-[#d7e4c7]"
-                >
-                  <Pencil />
-                  Edit event
-                </Button>
-
-                <DeleteEventButton
+              <CardFooter className="relative z-10 mt-auto flex-col items-stretch gap-2 border-white/10 bg-transparent px-4 py-4">
+                <JoinButton
                   eventId={event._id}
-                  eventTitle={event.title}
+                  userId={userId}
+                  joined={event.participants?.includes(userId ?? "") ?? false}
+                  className="w-full"
                 />
+
+                <div className="flex w-full gap-2">
+                  <Button
+                    render={<Link href={`/manage-events/${event._id}/edit`} />}
+                    className="h-10 flex-1 rounded-full bg-[#c8d9b5] text-sm font-semibold text-[#1b2415] hover:bg-[#d7e4c7]"
+                  >
+                    <Pencil />
+                    Edit event
+                  </Button>
+
+                  <DeleteEventButton
+                    eventId={event._id}
+                    eventTitle={event.title}
+                  />
+                </div>
               </CardFooter>
             </Card>
           </CarouselItem>

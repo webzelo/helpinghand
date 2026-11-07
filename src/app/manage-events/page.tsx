@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { CalendarPlus, TriangleAlert } from "lucide-react";
+import { headers } from "next/headers";
+import { CalendarDays, CalendarPlus, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EventCarousel } from "@/components/event-carousel";
+import { auth } from "@/lib/auth";
 import { EVENTS_API, type Event } from "@/lib/events";
 
 const ManageEvents = async () => {
@@ -21,6 +23,8 @@ const ManageEvents = async () => {
   } catch {
     error = `Could not load your events from ${EVENTS_API}. Make sure the server is running.`;
   }
+
+  const session = await auth.api.getSession({ headers: await headers() });
 
   return (
     <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
@@ -50,13 +54,24 @@ const ManageEvents = async () => {
               )}
             </div>
 
-            <Button
-              render={<Link href="/create-event" />}
-              className="h-11 w-fit rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
-            >
-              <CalendarPlus />
-              Create event
-            </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button
+                render={<Link href="/events/joined" />}
+                variant="outline"
+                className="h-11 w-fit rounded-full border-white/15 bg-transparent px-6 text-sm text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]"
+              >
+                <CalendarDays />
+                Joined events
+              </Button>
+
+              <Button
+                render={<Link href="/create-event" />}
+                className="h-11 w-fit rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
+              >
+                <CalendarPlus />
+                Create event
+              </Button>
+            </div>
           </div>
 
           {/* Content */}
@@ -88,7 +103,7 @@ const ManageEvents = async () => {
               </Button>
             </div>
           ) : (
-            <EventCarousel events={events} />
+            <EventCarousel events={events} userId={session?.user.id} />
           )}
         </div>
       </main>

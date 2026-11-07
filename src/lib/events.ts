@@ -20,6 +20,7 @@ export type Event = {
   location: string;
   thumbnail: string;
   description: string;
+  participants?: string[];
 };
 
 export type EventInput = Omit<Event, "_id">;

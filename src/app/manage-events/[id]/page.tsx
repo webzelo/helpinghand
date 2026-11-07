@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
@@ -9,6 +10,8 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { JoinButton } from "@/components/join-button";
+import { auth } from "@/lib/auth";
 import { EVENTS_API, formatEventDate, type Event } from "@/lib/events";
 
 export default async function EventDetailsPage({
@@ -41,6 +44,10 @@ export default async function EventDetailsPage({
       event = (await res.json()) as Event;
     }
   }
+
+  const session = await auth.api.getSession({ headers: await headers() });
+  const userId = session?.user.id;
+  const isJoined = Boolean(userId && event?.participants?.includes(userId));
 
   return (
     <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
@@ -107,12 +114,18 @@ export default async function EventDetailsPage({
                   {event.description}
                 </p>
 
-                <div className="mt-auto pt-2">
+                <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
+                  <JoinButton
+                    eventId={event._id}
+                    userId={userId}
+                    joined={isJoined}
+                  />
+
                   <Button
                     render={
                       <Link href={`/manage-events/${event._id}/edit`} />
                     }
-                    className="h-11 rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
+                    className="h-10 rounded-full bg-[#ef8658] px-5 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
                   >
                     <Pencil />
                     Edit event

@@ -14,6 +14,7 @@ const navLinks = [
 
 const authLinks = [
   { href: "/login", label: "Login" },
+  { href: "/signup", label: "SignUp" },
   { href: "/logout", label: "Logout" },
 ];
 

@@ -1,9 +1,11 @@
-"use client";
+"use client"
 
 import * as React from "react";
 import Link from "next/link";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { cn } from "cn";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const navLinks = [
   { href: "/events", label: "Upcoming Events" },
@@ -25,6 +27,9 @@ export function Navbar() {
   function toggleTheme() {
     setIsDark((current) => !current);
   }
+
+  const {data: session} = authClient.useSession() 
+  const user = session?.user 
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#1a1b18]/90 backdrop-blur-md">
@@ -71,6 +76,11 @@ export function Navbar() {
             </Link>
           ))}
         </nav>
+
+        <Avatar>
+        <AvatarImage src={user?.image as string} />
+        <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
+        </Avatar>
 
         <div className="flex items-center gap-2.5">
           <button

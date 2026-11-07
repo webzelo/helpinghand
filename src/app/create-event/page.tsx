@@ -2,37 +2,23 @@
 "use client";
 
 import * as React from "react";
-import { addDays, format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
-const eventTypes = [
-  "Cleanup",
-  "Plantation",
-  "Donation",
-  "Food Drive",
-  "Teaching",
-  "First Aid",
-  "Other",
-];
-
-const fieldClassName =
-  "mt-2 h-10 border-white/10 bg-[#1a1b18] text-[#f4f4ec] placeholder:text-[#8f9187] focus-visible:border-[#c8d9b5]/60 focus-visible:ring-[#c8d9b5]/20";
+import {
+  EVENT_TYPES,
+  fieldClassName,
+  selectClassName,
+  tomorrowDateString,
+} from "@/lib/events";
 
 export default function CreateEventPage() {
   // State management
-  const [tomorrow, setTomorrow] = React.useState("");
+  const tomorrow = tomorrowDateString();
   const [dateError, setDateError] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [submissionError, setSubmissionError] = React.useState("");
-
-  // Calculate tomorrow after component mounts
-  React.useEffect(() => {
-    const date = format(addDays(new Date(), 1), "yyyy-MM-dd");
-    setTomorrow(date);
-  }, []);
 
   // Handle form submission
   const handleSubmit = async (
@@ -154,13 +140,13 @@ export default function CreateEventPage() {
                   name="eventType"
                   required
                   defaultValue=""
-                  className="mt-2 h-10 w-full rounded-lg border border-white/10 bg-[#1a1b18] px-3 text-sm text-[#f4f4ec] outline-none transition-colors [color-scheme:dark] focus:border-[#c8d9b5]/60"
+                  className={selectClassName}
                 >
                   <option value="" disabled>
                     Select a type
                   </option>
 
-                  {eventTypes.map((type) => (
+                  {EVENT_TYPES.map((type) => (
                     <option key={type} value={type}>
                       {type}
                     </option>

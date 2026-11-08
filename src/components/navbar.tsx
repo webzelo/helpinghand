@@ -96,16 +96,20 @@ export function Navbar() {
             <Popover>
               <PopoverTrigger
                 render={
-                  <Avatar>
-                    <AvatarImage src={user?.image as string} />
-                    <AvatarFallback>
-                      {user?.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <button
+                    type="button"
+                    aria-label="Open account menu"
+                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#c8d9b5]"
+                  >
+                    <Avatar>
+                      <AvatarImage src={user?.image ?? undefined} />
+                      <AvatarFallback>
+                        {user?.name?.charAt(0) ?? "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
                 }
-              >
-                Open Popover
-              </PopoverTrigger>
+              />
 
               <PopoverContent>
                 <PopoverHeader>

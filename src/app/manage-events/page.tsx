@@ -56,6 +56,7 @@ const ManageEvents = async () => {
 
             <div className="flex flex-wrap gap-3">
               <Button
+                nativeButton={false}
                 render={<Link href="/events/joined" />}
                 variant="outline"
                 className="h-11 w-fit rounded-full border-white/15 bg-transparent px-6 text-sm text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]"
@@ -65,6 +66,7 @@ const ManageEvents = async () => {
               </Button>
 
               <Button
+                nativeButton={false}
                 render={<Link href="/create-event" />}
                 className="h-11 w-fit rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
               >
@@ -95,6 +97,7 @@ const ManageEvents = async () => {
               </p>
 
               <Button
+                nativeButton={false}
                 render={<Link href="/create-event" />}
                 className="mt-6 h-11 rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
               >

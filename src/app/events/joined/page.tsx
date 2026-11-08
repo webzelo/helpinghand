@@ -64,6 +64,7 @@ export default async function JoinedEventsPage() {
             </div>
 
             <Button
+              nativeButton={false}
               render={<Link href="/manage-events" />}
               variant="outline"
               className="h-11 w-fit rounded-full border-white/15 bg-transparent px-6 text-sm text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]"
@@ -142,6 +143,7 @@ export default async function JoinedEventsPage() {
 
                   <CardFooter className="mt-auto gap-2 border-white/10 bg-transparent px-4 py-4">
                     <Button
+                      nativeButton={false}
                       render={
                         <Link href={`/manage-events/${event._id}`} />
                       }

@@ -95,6 +95,7 @@ export function EventCarousel({
 
                 <div className="flex w-full gap-2">
                   <Button
+                    nativeButton={false}
                     render={<Link href={`/manage-events/${event._id}/edit`} />}
                     className="h-10 flex-1 rounded-full bg-[#c8d9b5] text-sm font-semibold text-[#1b2415] hover:bg-[#d7e4c7]"
                   >

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
 import { EVENTS_API } from "@/lib/events";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 type JoinButtonProps = {
   eventId: string;
@@ -43,11 +44,26 @@ export function JoinButton({
     setError("");
 
     try {
+      const token = await getTokenFromClient();
+
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
       const res = await fetch(`${EVENTS_API}/manage-events/${eventId}/join`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ userId, joined: !isJoined }),
       });
+
+      if (res.status === 401) {
+        router.push("/login");
+        return;
+      }
 
       if (!res.ok) {
         throw new Error("Failed to update your joined events.");

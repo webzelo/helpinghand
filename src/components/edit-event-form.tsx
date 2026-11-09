@@ -14,6 +14,7 @@ import {
   selectClassName,
   type Event,
 } from "@/lib/events";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 type EditEventFormProps = {
   event: Event;
@@ -48,13 +49,26 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
     setIsSubmitting(true);
 
     try {
+      const token = await getTokenFromClient();
+
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
       const res = await fetch(`${EVENTS_API}/manage-events/${event._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });
+
+      if (res.status === 401) {
+        router.push("/login");
+        return;
+      }
 
       const data = (await res.json().catch(() => null)) as {
         message?: string;

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { EVENTS_API } from "@/lib/events";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 type DeleteEventButtonProps = {
   eventId: string;
@@ -38,8 +39,14 @@ export function DeleteEventButton({
     setIsDeleting(true);
     setError("");
 
-  const token = await getTokenFromClient()
-    
+    const token = await getTokenFromClient();
+
+    if (!token) {
+      setError("Your session expired. Please log in again.");
+      setIsDeleting(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${EVENTS_API}/manage-events/${eventId}`, {
         method: "DELETE",

@@ -12,7 +12,7 @@ import {
   selectClassName,
   tomorrowDateString,
 } from "@/lib/events";
-import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export default function CreateEventPage() {
   // State management

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, TriangleAlert } from "lucide-react";
 import { EditEventForm } from "@/components/edit-event-form";
 import { EVENTS_API, tomorrowDateString, type Event } from "@/lib/events";
-import { getTokenFromClient } from "@/lib/getTokenFromClient";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 export default async function EditEventPage({
   params,
@@ -16,22 +16,29 @@ export default async function EditEventPage({
   let error: string | null = null;
   let res: Response | null = null;
 
-  const token = await getTokenFromClient()
+  const token = await getTokenFromServer();
+
+  if (!token) {
+    redirect("/login");
+  }
 
   try {
     res = await fetch(`${EVENTS_API}/manage-events/${id}`, {
-      // cache: "no-store",
-      method: "PATCH",
+      cache: "no-store",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
   } catch {
     error = `Could not load this event from ${EVENTS_API}. Make sure the server is running.`;
   }
 
   if (res) {
+    if (res.status === 401) {
+      redirect("/login");
+    }
+
     if (res.status === 404 || res.status === 400) {
       notFound();
     }

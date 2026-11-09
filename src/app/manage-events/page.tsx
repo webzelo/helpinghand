@@ -1,33 +1,53 @@
 import Link from "next/link";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { CalendarDays, CalendarPlus, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EventCarousel } from "@/components/event-carousel";
 import { auth } from "@/lib/auth";
 import { EVENTS_API, type Event } from "@/lib/events";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const ManageEvents = async () => {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  const token = await getTokenFromServer();
+
+  if (!token) {
+    redirect("/login");
+  }
+
   let events: Event[] = [];
   let error: string | null = null;
+  let res: Response | null = null;
 
   try {
-    const res = await fetch(`${EVENTS_API}/manage-events`, {
+    res = await fetch(`${EVENTS_API}/manage-events`, {
+      cache: "no-store",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `user logged in`
-      }
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
-
-    if (!res.ok) {
-      throw new Error(`The events API responded with ${res.status}.`);
-    }
-
-    events = (await res.json()) as Event[];
   } catch {
     error = `Could not load your events from ${EVENTS_API}. Make sure the server is running.`;
   }
 
-  const session = await auth.api.getSession({ headers: await headers() });
+  if (res) {
+    if (res.status === 401) {
+      redirect("/login");
+    }
+
+    if (!res.ok) {
+      error = `The events API responded with ${res.status}.`;
+    } else {
+      events = (await res.json()) as Event[];
+    }
+  }
 
   return (
     <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
@@ -109,7 +129,7 @@ const ManageEvents = async () => {
               </Button>
             </div>
           ) : (
-            <EventCarousel events={events} userId={session?.user.id} />
+            <EventCarousel events={events} userId={session.user.id} />
           )}
         </div>
       </main>

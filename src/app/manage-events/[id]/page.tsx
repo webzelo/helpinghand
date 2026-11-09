@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { JoinButton } from "@/components/join-button";
 import { auth } from "@/lib/auth";
 import { EVENTS_API, formatEventDate, type Event } from "@/lib/events";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 export default async function EventDetailsPage({
   params,
@@ -25,17 +26,14 @@ export default async function EventDetailsPage({
   let error: string | null = null;
   let res: Response | null = null;
 
-  const jwtToken = await auth.api.getToken({
-    headers: await headers(),
-  }); 
-  console.log(jwtToken?.token)
+  const token = await getTokenFromServer()
 
   try {
     res = await fetch(`${EVENTS_API}/manage-events/${id}`, {
       // cache: "no-store",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwtToken?.token}`
+        'Authorization': `Bearer ${token}`
       }
     });
   } catch {

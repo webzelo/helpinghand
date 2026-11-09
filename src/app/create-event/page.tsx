@@ -27,10 +27,7 @@ export default function CreateEventPage() {
   ) => {
     event.preventDefault();
 
-    const {data, error} = await authClient.token()
-    console.log(data)
-
-    const token = data?.token
+    const token = await getTokenFromClient()
 
     const form = event.currentTarget;
 

@@ -32,13 +32,21 @@ export function DeleteEventButton({
   const [isDeleting, setIsDeleting] = React.useState(false);
   const [error, setError] = React.useState("");
 
+  
+
   const handleDelete = async () => {
     setIsDeleting(true);
     setError("");
 
+  const token = await getTokenFromClient()
+    
     try {
       const res = await fetch(`${EVENTS_API}/manage-events/${eventId}`, {
         method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       if (!res.ok) {

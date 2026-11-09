@@ -14,6 +14,7 @@ import {
 import { JoinButton } from "@/components/join-button";
 import { auth } from "@/lib/auth";
 import { EVENTS_API, formatEventDate, type Event } from "@/lib/events";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 export default async function JoinedEventsPage() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -22,29 +23,42 @@ export default async function JoinedEventsPage() {
     redirect("/login");
   }
 
+  const token = await getTokenFromServer();
+
+  if (!token) {
+    redirect("/login");
+  }
+
   let joined: Event[] = [];
   let error: string | null = null;
+  let res: Response | null = null;
 
   try {
-    const res = await fetch(`${EVENTS_API}/manage-events`, {
-      // cache: "no-store",
+    res = await fetch(`${EVENTS_API}/manage-events`, {
+      cache: "no-store",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `user logged in`
-      }
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
-
-    if (!res.ok) {
-      throw new Error();
-    }
-
-    const events = (await res.json()) as Event[];
-
-    joined = events
-      .filter((event) => event.participants?.includes(session.user.id))
-      .sort((a, b) => a.eventDate.localeCompare(b.eventDate));
   } catch {
     error = `Could not load your joined events from ${EVENTS_API}. Make sure the server is running.`;
+  }
+
+  if (res) {
+    if (res.status === 401) {
+      redirect("/login");
+    }
+
+    if (!res.ok) {
+      error = `The events API responded with ${res.status}.`;
+    } else {
+      const events = (await res.json()) as Event[];
+
+      joined = events
+        .filter((event) => event.participants?.includes(session.user.id))
+        .sort((a, b) => a.eventDate.localeCompare(b.eventDate));
+    }
   }
 
   return (

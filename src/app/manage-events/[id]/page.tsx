@@ -27,7 +27,10 @@ export default async function EventDetailsPage({
 
   try {
     res = await fetch(`${EVENTS_API}/manage-events/${id}`, {
-      cache: "no-store",
+      // cache: "no-store",
+      headers: {
+        authorization: 'user logged in'
+      }
     });
   } catch {
     error = `Could not load this event from ${EVENTS_API}. Make sure the server is running.`;

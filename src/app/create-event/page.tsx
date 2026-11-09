@@ -12,6 +12,7 @@ import {
   selectClassName,
   tomorrowDateString,
 } from "@/lib/events";
+import { authClient } from "@/lib/auth-client";
 
 export default function CreateEventPage() {
   // State management
@@ -25,6 +26,11 @@ export default function CreateEventPage() {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+
+    const {data, error} = await authClient.token()
+    console.log(data)
+
+    const token = data?.token
 
     const form = event.currentTarget;
 
@@ -56,18 +62,19 @@ export default function CreateEventPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(formObject),
       });
 
-      const data = await res.json();
+      const result = await res.json();
 
       // Check API response
       if (!res.ok) {
-        throw new Error(data.message || "Failed to create event.");
+        throw new Error(result.message || "Failed to create event.");
       }
 
-      console.log("Event created successfully:", data);
+      console.log("Event created successfully:", result);
 
       // Show success message
       setSubmitted(true);

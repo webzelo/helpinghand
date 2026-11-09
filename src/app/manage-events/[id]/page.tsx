@@ -25,11 +25,17 @@ export default async function EventDetailsPage({
   let error: string | null = null;
   let res: Response | null = null;
 
+  const jwtToken = await auth.api.getToken({
+    headers: await headers(),
+  }); 
+  console.log(jwtToken?.token)
+
   try {
     res = await fetch(`${EVENTS_API}/manage-events/${id}`, {
       // cache: "no-store",
       headers: {
-        authorization: 'user logged in'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwtToken?.token}`
       }
     });
   } catch {

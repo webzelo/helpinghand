@@ -27,7 +27,11 @@ export default async function JoinedEventsPage() {
 
   try {
     const res = await fetch(`${EVENTS_API}/manage-events`, {
-      cache: "no-store",
+      // cache: "no-store",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `user logged in`
+      }
     });
 
     if (!res.ok) {

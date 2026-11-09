@@ -12,7 +12,10 @@ const ManageEvents = async () => {
 
   try {
     const res = await fetch(`${EVENTS_API}/manage-events`, {
-      cache: "no-store",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `user logged in`
+      }
     });
 
     if (!res.ok) {

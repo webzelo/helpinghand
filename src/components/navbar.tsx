@@ -34,7 +34,13 @@ const navLinks = [
 const authLinks = [
   { href: "/login", label: "Login" },
   { href: "/signup", label: "SignUp" },
-  { href: "/logout", label: "Logout" },
+];
+
+const profileLinks = [
+  { href: "/profile", label: "Profile" },
+  { href: "/create-event", label: "Create Event" },
+  { href: "/manage-events", label: "Manage Events" },
+  { href: "/events/joined", label: "Joined Events" },
 ];
 
 export function Navbar() {
@@ -96,11 +102,15 @@ export function Navbar() {
           {user ? (
             <Popover>
               <PopoverTrigger
+                openOnHover
+                delay={100}
+                closeDelay={150}
+                nativeButton={false}
                 render={
-                  <button
-                    type="button"
-                    aria-label="Open account menu"
-                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
+                  <Link
+                    href="/profile"
+                    aria-label="Your profile"
+                    className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
                   >
                     <Avatar>
                       <AvatarImage src={user?.image ?? undefined} />
@@ -108,7 +118,7 @@ export function Navbar() {
                         {user?.name?.charAt(0) ?? "U"}
                       </AvatarFallback>
                     </Avatar>
-                  </button>
+                  </Link>
                 }
               />
 
@@ -122,6 +132,18 @@ export function Navbar() {
                     {user?.email}
                   </PopoverDescription>
                 </PopoverHeader>
+
+                <div className="flex flex-col gap-0.5 border-t border-line pt-2">
+                  {profileLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="rounded-md px-2 py-1.5 text-sm text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
 
                 <Button
                   onClick={handleLogout}
@@ -162,14 +184,6 @@ export function Navbar() {
               strokeWidth={1.6}
             />
           </button>
-
-          <Link
-            href="/profile"
-            aria-label="Your profile"
-            className="grid size-9 place-items-center rounded-full bg-brand-green/15 text-sm font-medium text-brand-green ring-1 ring-line transition-colors hover:bg-brand-green/25"
-          >
-            G
-          </Link>
 
           <button
             type="button"
@@ -229,6 +243,29 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+
+              {user && (
+                <>
+                  <Link
+                    href="/profile"
+                    onClick={() => setMenuOpen(false)}
+                    className="py-1 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+                  >
+                    Profile
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }}
+                    className="cursor-pointer py-1 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
             </div>
           </nav>
         </div>

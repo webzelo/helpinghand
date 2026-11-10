@@ -1,7 +1,10 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
-const footerColumns = [
+const baseFooterColumns = [
   {
     title: "Explore",
     links: [
@@ -18,17 +21,28 @@ const footerColumns = [
       { label: "Joined Events", href: "/events/joined" },
     ],
   },
-  {
-    title: "Account",
-    links: [
-      { label: "Login", href: "/login" },
-      { label: "Logout", href: "/logout" },
-      { label: "Profile", href: "/profile" },
-    ],
-  },
 ];
 
 export function SiteFooter() {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const footerColumns = [
+    ...baseFooterColumns,
+    {
+      title: "Account",
+      links: user
+        ? [
+            { label: "Profile", href: "/profile" },
+            { label: "Logout", href: "/logout" },
+          ]
+        : [
+            { label: "Login", href: "/login" },
+            { label: "SignUp", href: "/signup" },
+          ],
+    },
+  ];
+
   return (
     <footer className="border-t border-line bg-page">
       <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-6">

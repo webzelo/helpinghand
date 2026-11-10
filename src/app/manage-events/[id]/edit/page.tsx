@@ -51,12 +51,12 @@ export default async function EditEventPage({
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
+    <div className="flex flex-1 flex-col bg-page text-ink">
       <main className="flex-1">
         <div className="mx-auto max-w-[900px] px-5 py-16 sm:px-6 lg:py-20">
           <Link
             href={`/manage-events/${id}`}
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#a4a59c] transition-colors hover:text-[#f4f4ec]"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted transition-colors hover:text-ink"
           >
             <ArrowLeft className="size-3.5" />
             Back to event details
@@ -64,15 +64,15 @@ export default async function EditEventPage({
 
           {/* Page Header */}
           <div className="mt-6 mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#f0875c]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
               Update the plan
             </p>
 
-            <h1 className="mt-4 font-heading text-[clamp(2.3rem,4vw,3.2rem)] leading-none tracking-[-0.02em] text-[#f5f4ec]">
+            <h1 className="mt-4 font-heading text-[clamp(2.3rem,4vw,3.2rem)] leading-none tracking-[-0.02em] text-ink">
               Edit event
             </h1>
 
-            <p className="mt-4 max-w-[520px] text-sm leading-6 text-[#a4a59c]">
+            <p className="mt-4 max-w-[520px] text-sm leading-6 text-ink-muted">
               Change the details below and save. Volunteers will see the new
               information right away.
             </p>
@@ -81,7 +81,7 @@ export default async function EditEventPage({
           {error ? (
             <div
               role="alert"
-              className="flex items-start gap-3 rounded-2xl border border-[#f0875c]/25 bg-[#f0875c]/10 px-5 py-4 text-sm text-[#f2a183]"
+              className="flex items-start gap-3 rounded-2xl border border-brand/25 bg-brand/10 px-5 py-4 text-sm text-brand"
             >
               <TriangleAlert className="mt-0.5 size-4 shrink-0" />
               <p>{error}</p>

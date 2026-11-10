@@ -43,13 +43,13 @@ export function GallerySection() {
       <div className="mx-auto max-w-[1200px] px-5 pb-20 sm:px-6 lg:pb-24">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#f0875c]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
               From the board
             </p>
-            <h2 className="mt-4 font-heading text-[clamp(2rem,3vw,2.6rem)] leading-none tracking-[-0.01em] text-[#f5f4ec]">
+            <h2 className="mt-4 font-heading text-[clamp(2rem,3vw,2.6rem)] leading-none tracking-[-0.01em] text-ink">
               The work, as it happens.
             </h2>
-            <p className="mt-4 max-w-[520px] text-sm leading-6 text-[#a4a59c]">
+            <p className="mt-4 max-w-[520px] text-sm leading-6 text-ink-muted">
               A few frames from the crews, tables, and Saturday mornings that
               made it onto the board.
             </p>
@@ -57,7 +57,7 @@ export function GallerySection() {
 
           <Link
             href="/events"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#d7d8cf] transition-colors hover:text-white"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
           >
             See all events
             <ArrowUpRight className="size-4" strokeWidth={1.8} />

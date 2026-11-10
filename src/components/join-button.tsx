@@ -87,15 +87,15 @@ export function JoinButton({
         className={cn(
           "h-10 rounded-full px-5 text-sm",
           isJoined
-            ? "border border-[#f0875c]/30 bg-transparent text-[#f0875c] hover:bg-[#f0875c]/10 hover:text-[#f2a183]"
-            : "bg-[#c8d9b5] font-semibold text-[#1b2415] hover:bg-[#d7e4c7]",
+            ? "border border-brand/30 bg-transparent text-brand hover:bg-brand/10 hover:text-brand"
+            : "bg-brand-green font-semibold text-brand-green-foreground hover:bg-brand-green-hover",
           className
         )}
       >
         {isSaving ? "Saving…" : isJoined ? "Leave event" : "Join event"}
       </Button>
 
-      {error && <p className="text-xs text-[#f0875c]">{error}</p>}
+      {error && <p className="text-xs text-brand">{error}</p>}
     </div>
   );
 }

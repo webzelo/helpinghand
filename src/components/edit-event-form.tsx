@@ -93,12 +93,12 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-white/10 bg-[#20211d] p-5 sm:p-8"
+      className="rounded-3xl border border-line bg-surface p-5 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         {/* Event Title */}
         <div className="sm:col-span-2">
-          <Label htmlFor="title" className="text-[#d7d8cf]">
+          <Label htmlFor="title" className="text-ink-soft">
             Event title
           </Label>
 
@@ -114,7 +114,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
 
         {/* Event Type */}
         <div>
-          <Label htmlFor="eventType" className="text-[#d7d8cf]">
+          <Label htmlFor="eventType" className="text-ink-soft">
             Event type
           </Label>
 
@@ -139,7 +139,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
 
         {/* Event Date */}
         <div>
-          <Label htmlFor="eventDate" className="text-[#d7d8cf]">
+          <Label htmlFor="eventDate" className="text-ink-soft">
             Event date
           </Label>
 
@@ -160,11 +160,11 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
             }}
             aria-invalid={dateError ? true : undefined}
             aria-describedby={dateError ? "event-date-error" : undefined}
-            className={`${fieldClassName} [color-scheme:dark]`}
+            className={`${fieldClassName} [color-scheme:light] dark:[color-scheme:dark]`}
           />
 
           {dateError && (
-            <p id="event-date-error" className="mt-2 text-xs text-[#f0875c]">
+            <p id="event-date-error" className="mt-2 text-xs text-brand">
               {dateError}
             </p>
           )}
@@ -172,7 +172,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
 
         {/* Location */}
         <div className="sm:col-span-2">
-          <Label htmlFor="location" className="text-[#d7d8cf]">
+          <Label htmlFor="location" className="text-ink-soft">
             Location
           </Label>
 
@@ -188,7 +188,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
 
         {/* Thumbnail Image */}
         <div className="sm:col-span-2">
-          <Label htmlFor="thumbnail" className="text-[#d7d8cf]">
+          <Label htmlFor="thumbnail" className="text-ink-soft">
             Thumbnail image URL
           </Label>
 
@@ -205,7 +205,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
 
         {/* Description */}
         <div className="sm:col-span-2">
-          <Label htmlFor="description" className="text-[#d7d8cf]">
+          <Label htmlFor="description" className="text-ink-soft">
             Description
           </Label>
 
@@ -222,8 +222,8 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
       </div>
 
       {/* Submit Section */}
-      <div className="mt-7 flex flex-col gap-4 border-t border-white/[0.07] pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-[#8f9187]">
+      <div className="mt-7 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs text-ink-muted">
           The date must be in the future before the event can be saved.
         </p>
 
@@ -231,7 +231,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
           <Button
             render={<Link href={`/manage-events/${event._id}`} />}
             variant="ghost"
-            className="h-11 rounded-full px-5 text-sm text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]"
+            className="h-11 rounded-full px-5 text-sm text-ink-soft hover:bg-ink/5 hover:text-ink"
           >
             Cancel
           </Button>
@@ -239,7 +239,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="h-11 rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
+            className="h-11 rounded-full bg-brand-fill px-6 text-sm font-semibold text-brand-foreground hover:bg-brand-fill-hover"
           >
             {isSubmitting ? "Saving…" : "Save changes"}
           </Button>
@@ -250,7 +250,7 @@ export function EditEventForm({ event, minDate }: EditEventFormProps) {
       {submissionError && (
         <p
           role="alert"
-          className="mt-5 rounded-xl border border-[#f0875c]/20 bg-[#f0875c]/10 px-4 py-3 text-sm text-[#f0875c]"
+          className="mt-5 rounded-xl border border-brand/20 bg-brand/10 px-4 py-3 text-sm text-brand"
         >
           {submissionError}
         </p>

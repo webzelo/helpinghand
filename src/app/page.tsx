@@ -3,12 +3,12 @@ import { BoardFeatures } from "@/components/board-features";
 import { FeatureSection } from "@/components/feature-section";
 import { GallerySection } from "@/components/gallery-section";
 import { NewsletterSection } from "@/components/newsletter-section";
-import Featured from "@/components/featured";
+import Featured from "@/components/featured-upcoming-events";
 
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
+    <div className="flex flex-1 flex-col bg-page text-ink">
       
       <main className="flex-1">
         <Banner />

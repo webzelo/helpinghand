@@ -62,21 +62,21 @@ export default async function JoinedEventsPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
+    <div className="flex flex-1 flex-col bg-page text-ink">
       <main className="flex-1">
         <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-6 lg:py-20">
           {/* Page Header */}
           <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#f0875c]">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
                 Your plans
               </p>
 
-              <h1 className="mt-4 font-heading text-[clamp(2.3rem,4vw,3.2rem)] leading-none tracking-[-0.02em] text-[#f5f4ec]">
+              <h1 className="mt-4 font-heading text-[clamp(2.3rem,4vw,3.2rem)] leading-none tracking-[-0.02em] text-ink">
                 Joined events
               </h1>
 
-              <p className="mt-4 max-w-[520px] text-sm leading-6 text-[#a4a59c]">
+              <p className="mt-4 max-w-[520px] text-sm leading-6 text-ink-muted">
                 Events you signed up for, sorted by the date they happen.
               </p>
             </div>
@@ -85,7 +85,7 @@ export default async function JoinedEventsPage() {
               nativeButton={false}
               render={<Link href="/manage-events" />}
               variant="outline"
-              className="h-11 w-fit rounded-full border-white/15 bg-transparent px-6 text-sm text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]"
+              className="h-11 w-fit rounded-full border-line bg-transparent px-6 text-sm text-ink-soft hover:bg-ink/5 hover:text-ink"
             >
               Browse events
             </Button>
@@ -95,24 +95,24 @@ export default async function JoinedEventsPage() {
           {error ? (
             <div
               role="alert"
-              className="flex items-start gap-3 rounded-2xl border border-[#f0875c]/25 bg-[#f0875c]/10 px-5 py-4 text-sm text-[#f2a183]"
+              className="flex items-start gap-3 rounded-2xl border border-brand/25 bg-brand/10 px-5 py-4 text-sm text-brand"
             >
               <TriangleAlert className="mt-0.5 size-4 shrink-0" />
               <p>{error}</p>
             </div>
           ) : joined.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-white/15 bg-[#20211d] px-6 py-16 text-center">
-              <h2 className="font-heading text-2xl text-[#f5f4ec]">
+            <div className="rounded-3xl border border-dashed border-line bg-surface px-6 py-16 text-center">
+              <h2 className="font-heading text-2xl text-ink">
                 No joined events yet
               </h2>
 
-              <p className="mx-auto mt-3 max-w-[420px] text-sm leading-6 text-[#a4a59c]">
+              <p className="mx-auto mt-3 max-w-[420px] text-sm leading-6 text-ink-muted">
                 Open an event and choose Join event — it will show up here.
               </p>
 
               <Button
                 render={<Link href="/manage-events" />}
-                className="mt-6 h-11 rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
+                className="mt-6 h-11 rounded-full bg-brand-fill px-6 text-sm font-semibold text-brand-foreground hover:bg-brand-fill-hover"
               >
                 Find an event
               </Button>
@@ -122,9 +122,9 @@ export default async function JoinedEventsPage() {
               {joined.map((event) => (
                 <Card
                   key={event._id}
-                  className="gap-0 rounded-2xl bg-[#20211d] py-0 text-[#f4f4ec] ring-white/10"
+                  className="gap-0 rounded-2xl bg-surface py-0 text-ink ring-line"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#262722]">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-surface-2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={event.thumbnail}
@@ -135,37 +135,37 @@ export default async function JoinedEventsPage() {
 
                     <Badge
                       variant="secondary"
-                      className="absolute top-3 left-3 h-6 rounded-full bg-[#1a1b18]/85 px-3 text-[11px] font-semibold text-[#e9e9df] backdrop-blur-sm"
+                      className="absolute top-3 left-3 h-6 rounded-full bg-page/85 px-3 text-[11px] font-semibold text-ink backdrop-blur-sm"
                     >
                       {event.eventType}
                     </Badge>
                   </div>
 
                   <CardHeader className="px-4 pt-4">
-                    <CardTitle className="line-clamp-2 font-heading text-xl leading-snug text-[#f5f4ec]">
+                    <CardTitle className="line-clamp-2 font-heading text-xl leading-snug text-ink">
                       {event.title}
                     </CardTitle>
                   </CardHeader>
 
                   <CardContent className="flex flex-col gap-2 px-4 pt-2">
-                    <p className="flex items-center gap-2 text-sm text-[#d7d8cf]">
-                      <CalendarDays className="size-4 shrink-0 text-[#c8d9b5]" />
+                    <p className="flex items-center gap-2 text-sm text-ink-soft">
+                      <CalendarDays className="size-4 shrink-0 text-brand-green" />
                       {formatEventDate(event.eventDate)}
                     </p>
 
-                    <p className="flex items-center gap-2 text-sm text-[#a4a59c]">
-                      <MapPin className="size-4 shrink-0 text-[#c8d9b5]" />
+                    <p className="flex items-center gap-2 text-sm text-ink-muted">
+                      <MapPin className="size-4 shrink-0 text-brand-green" />
                       <span className="line-clamp-1">{event.location}</span>
                     </p>
                   </CardContent>
 
-                  <CardFooter className="mt-auto gap-2 border-white/10 bg-transparent px-4 py-4">
+                  <CardFooter className="mt-auto gap-2 border-line bg-transparent px-4 py-4">
                     <Button
                       nativeButton={false}
                       render={
                         <Link href={`/manage-events/${event._id}`} />
                       }
-                      className="h-10 flex-1 rounded-full bg-[#c8d9b5] text-sm font-semibold text-[#1b2415] hover:bg-[#d7e4c7]"
+                      className="h-10 flex-1 rounded-full bg-brand-green text-sm font-semibold text-brand-green-foreground hover:bg-brand-green-hover"
                     >
                       View details
                     </Button>

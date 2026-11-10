@@ -4,6 +4,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
 import {
@@ -38,10 +39,10 @@ const authLinks = [
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(true);
+  const { resolvedTheme, setTheme } = useTheme();
 
   function toggleTheme() {
-    setIsDark((current) => !current);
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   }
 
   const { data: session } = authClient.useSession();
@@ -52,18 +53,18 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#1a1b18]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-line bg-page/90 backdrop-blur-md">
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between px-5 sm:px-6">
         <Link
           href="/"
           className="flex items-center gap-3"
           aria-label="Helping Hand home"
         >
-          <span className="grid size-9 place-items-center rounded-full bg-[#c8d9b5] font-heading text-xl leading-none text-[#1b2415]">
+          <span className="grid size-9 place-items-center rounded-full bg-brand-green font-heading text-xl leading-none text-brand-green-foreground">
             H
           </span>
 
-          <span className="font-heading text-[26px] leading-none tracking-tight text-[#f4f4ec]">
+          <span className="font-heading text-[26px] leading-none tracking-tight text-ink">
             Helping Hand
           </span>
         </Link>
@@ -77,10 +78,10 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-[13px] font-medium transition-colors hover:text-[#f4f4ec]",
+                "text-[13px] font-medium transition-colors hover:text-ink",
                 index === 0
-                  ? "text-[#f4f4ec]"
-                  : "text-[#a8a99f]"
+                  ? "text-ink"
+                  : "text-ink-muted"
               )}
             >
               {link.label}
@@ -88,7 +89,7 @@ export function Navbar() {
           ))}
 
           <span
-            className="h-4 w-px bg-white/10"
+            className="h-4 w-px bg-line"
             aria-hidden="true"
           />
 
@@ -99,7 +100,7 @@ export function Navbar() {
                   <button
                     type="button"
                     aria-label="Open account menu"
-                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[#c8d9b5]"
+                    className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-green"
                   >
                     <Avatar>
                       <AvatarImage src={user?.image ?? undefined} />
@@ -136,7 +137,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-[13px] font-medium text-[#a8a99f] transition-colors hover:text-[#f4f4ec]"
+                  className="text-[13px] font-medium text-ink-muted transition-colors hover:text-ink"
                 >
                   {link.label}
                 </Link>
@@ -149,31 +150,23 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={
-              isDark
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-            }
-            aria-pressed={isDark}
-            className="hidden size-9 cursor-pointer place-items-center rounded-full border border-white/10 text-[#d7d8cf] transition-colors hover:border-white/20 hover:bg-white/5 sm:grid"
+            aria-label="Toggle color theme"
+            className="hidden size-9 cursor-pointer place-items-center rounded-full border border-line text-ink-soft transition-colors hover:border-ink/20 hover:bg-ink/5 sm:grid"
           >
-            {isDark ? (
-              <Sun
-                className="size-[17px]"
-                strokeWidth={1.6}
-              />
-            ) : (
-              <Moon
-                className="size-[17px]"
-                strokeWidth={1.6}
-              />
-            )}
+            <Sun
+              className="hidden size-[17px] dark:block"
+              strokeWidth={1.6}
+            />
+            <Moon
+              className="size-[17px] dark:hidden"
+              strokeWidth={1.6}
+            />
           </button>
 
           <Link
             href="/profile"
             aria-label="Your profile"
-            className="grid size-9 place-items-center rounded-full bg-[#2b3325] text-sm font-medium text-[#dce7cf] ring-1 ring-white/5 transition-colors hover:bg-[#343e2c]"
+            className="grid size-9 place-items-center rounded-full bg-brand-green/15 text-sm font-medium text-brand-green ring-1 ring-line transition-colors hover:bg-brand-green/25"
           >
             G
           </Link>
@@ -188,7 +181,7 @@ export function Navbar() {
             }
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className="grid size-9 cursor-pointer place-items-center rounded-full border border-white/10 text-[#d7d8cf] transition-colors hover:border-white/20 hover:bg-white/5 lg:hidden"
+            className="grid size-9 cursor-pointer place-items-center rounded-full border border-line text-ink-soft transition-colors hover:border-ink/20 hover:bg-ink/5 lg:hidden"
           >
             {menuOpen ? (
               <X
@@ -208,7 +201,7 @@ export function Navbar() {
       {menuOpen ? (
         <div
           id="mobile-menu"
-          className="border-t border-white/[0.07] bg-[#1a1b18] px-5 pb-5 pt-3 lg:hidden"
+          className="border-t border-line bg-page px-5 pb-5 pt-3 lg:hidden"
         >
           <nav
             className="flex flex-col"
@@ -219,19 +212,19 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="py-2.5 text-sm font-medium text-[#d7d8cf] transition-colors hover:text-white"
+                className="py-2.5 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
               >
                 {link.label}
               </Link>
             ))}
 
-            <div className="mt-3 flex gap-6 border-t border-white/[0.07] pt-3">
+            <div className="mt-3 flex gap-6 border-t border-line pt-3">
               {authLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="py-1 text-sm font-medium text-[#a8a99f] transition-colors hover:text-white"
+                  className="py-1 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
                 >
                   {link.label}
                 </Link>

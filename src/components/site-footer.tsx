@@ -30,7 +30,7 @@ const footerColumns = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-white/[0.07] bg-[#1a1b18]">
+    <footer className="border-t border-line bg-page">
       <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-6">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
@@ -39,19 +39,19 @@ export function SiteFooter() {
               className="flex items-center gap-3"
               aria-label="Helping Hand home"
             >
-              <span className="grid size-9 place-items-center rounded-full bg-[#c8d9b5] font-heading text-xl leading-none text-[#1b2415]">
+              <span className="grid size-9 place-items-center rounded-full bg-brand-green font-heading text-xl leading-none text-brand-green-foreground">
                 H
               </span>
-              <span className="font-heading text-[26px] leading-none tracking-tight text-[#f4f4ec]">
+              <span className="font-heading text-[26px] leading-none tracking-tight text-ink">
                 Helping Hand
               </span>
             </Link>
-            <p className="mt-4 max-w-[290px] text-sm leading-6 text-[#a4a59c]">
+            <p className="mt-4 max-w-[290px] text-sm leading-6 text-ink-muted">
               A board for the work that makes a neighborhood feel like one.
             </p>
             <Link
               href="/events"
-              className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[#d7d8cf] transition-colors hover:text-white"
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
             >
               Find a crew
               <ArrowUpRight className="size-4" strokeWidth={1.8} />
@@ -60,7 +60,7 @@ export function SiteFooter() {
 
           {footerColumns.map((column) => (
             <div key={column.title}>
-              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8f9187]">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted">
                 {column.title}
               </h2>
               <ul className="mt-4 space-y-3">
@@ -68,7 +68,7 @@ export function SiteFooter() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-[#d7d8cf] transition-colors hover:text-white"
+                      className="text-sm text-ink-soft transition-colors hover:text-ink"
                     >
                       {link.label}
                     </Link>
@@ -79,18 +79,18 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/[0.07] pt-6 text-xs text-[#8f9187] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© Helping Hand. Built for the neighborhood.</p>
           <div className="flex gap-5">
             <Link
               href="/privacy"
-              className="transition-colors hover:text-[#d7d8cf]"
+              className="transition-colors hover:text-ink-soft"
             >
               Privacy
             </Link>
             <Link
               href="/terms"
-              className="transition-colors hover:text-[#d7d8cf]"
+              className="transition-colors hover:text-ink-soft"
             >
               Terms
             </Link>

@@ -74,20 +74,20 @@ export function DeleteEventButton({
         render={
           <Button
             aria-label={`Delete ${eventTitle}`}
-            className="h-10 w-10 shrink-0 rounded-full border border-[#f0875c]/30 bg-[#f0875c]/10 text-[#f0875c] hover:bg-[#f0875c]/20 hover:text-[#f2a183]"
+            className="h-10 w-10 shrink-0 rounded-full border border-brand/30 bg-brand/10 text-brand hover:bg-brand/20 hover:text-brand"
           />
         }
       >
         <Trash2 />
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="bg-[#20211d] text-[#f4f4ec] ring-white/10">
+      <AlertDialogContent className="bg-surface text-ink ring-line">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-[#f5f4ec]">
+          <AlertDialogTitle className="text-ink">
             Delete this event?
           </AlertDialogTitle>
 
-          <AlertDialogDescription className="text-[#a4a59c]">
+          <AlertDialogDescription className="text-ink-muted">
             “{eventTitle}” will be permanently removed. This cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -95,21 +95,21 @@ export function DeleteEventButton({
         {error && (
           <p
             role="alert"
-            className="rounded-xl border border-[#f0875c]/20 bg-[#f0875c]/10 px-4 py-3 text-sm text-[#f0875c]"
+            className="rounded-xl border border-brand/20 bg-brand/10 px-4 py-3 text-sm text-brand"
           >
             {error}
           </p>
         )}
 
-        <AlertDialogFooter className="border-white/10 bg-transparent">
-          <AlertDialogCancel className="border-white/15 bg-transparent text-[#d7d8cf] hover:bg-white/5 hover:text-[#f4f4ec]">
+        <AlertDialogFooter className="border-line bg-transparent">
+          <AlertDialogCancel className="border-line bg-transparent text-ink-soft hover:bg-ink/5 hover:text-ink">
             Cancel
           </AlertDialogCancel>
 
           <AlertDialogAction
             onClick={handleDelete}
             disabled={isDeleting}
-            className="bg-[#f0875c] text-[#1b1b18] hover:bg-[#f2a183]"
+            className="bg-brand-fill text-brand-foreground hover:bg-brand-fill-hover"
           >
             {isDeleting ? "Deleting…" : "Delete event"}
           </AlertDialogAction>

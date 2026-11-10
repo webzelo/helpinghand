@@ -7,6 +7,21 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-fill: var(--brand-fill);
+  --color-brand-fill-hover: var(--brand-fill-hover);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-hover: var(--brand-green-hover);
+  --color-brand-green-foreground: var(--brand-green-foreground);
+  --color-input-bg: var(--input-bg);
   --font-sans: var(--font-dm-sans);
   --font-mono: ui-monospace, monospace;
   --font-heading: var(--font-dm-serif-display);
@@ -49,6 +64,22 @@
 }
 
 :root {
+  color-scheme: light;
+  --page: #f4f3eb;
+  --surface: #ffffff;
+  --surface-2: #e9e7de;
+  --ink: #1b1b18;
+  --ink-soft: #3f4139;
+  --ink-muted: #5f6158;
+  --line: rgba(27, 27, 24, 0.12);
+  --brand: #b5512a;
+  --brand-fill: #e07a4a;
+  --brand-fill-hover: #f08a5c;
+  --brand-foreground: #1b1b18;
+  --brand-green: #557242;
+  --brand-green-hover: #466138;
+  --brand-green-foreground: #ffffff;
+  --input-bg: #ffffff;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -84,6 +115,22 @@
 }
 
 .dark {
+  color-scheme: dark;
+  --page: #1a1b18;
+  --surface: #20211d;
+  --surface-2: #262722;
+  --ink: #f4f4ec;
+  --ink-soft: #d7d8cf;
+  --ink-muted: #a4a59c;
+  --line: rgba(255, 255, 255, 0.1);
+  --brand: #f0875c;
+  --brand-fill: #ef8658;
+  --brand-fill-hover: #f39a73;
+  --brand-foreground: #1b1b18;
+  --brand-green: #c8d9b5;
+  --brand-green-hover: #d7e4c7;
+  --brand-green-foreground: #1b2415;
+  --input-bg: #1a1b18;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);

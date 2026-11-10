@@ -91,21 +91,21 @@ export default function CreateEventPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col bg-[#1a1b18] text-[#f4f4ec]">
+    <div className="flex flex-1 flex-col bg-page text-ink">
       <main className="flex-1">
         <div className="mx-auto max-w-[900px] px-5 py-16 sm:px-6 lg:py-20">
 
           {/* Page Header */}
           <div className="mb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#f0875c]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
               Host a crew
             </p>
 
-            <h1 className="mt-4 font-heading text-[clamp(2.3rem,4vw,3.2rem)] leading-none tracking-[-0.02em] text-[#f5f4ec]">
+            <h1 className="mt-4 font-heading text-[clamp(2.3rem,4vw,3.2rem)] leading-none tracking-[-0.02em] text-ink">
               Create an event
             </h1>
 
-            <p className="mt-4 max-w-[520px] text-sm leading-6 text-[#a4a59c]">
+            <p className="mt-4 max-w-[520px] text-sm leading-6 text-ink-muted">
               Post the details, open a few roles, and give neighbors a date to
               show up for.
             </p>
@@ -114,13 +114,13 @@ export default function CreateEventPage() {
           {/* Event Form */}
           <form
             onSubmit={handleSubmit}
-            className="rounded-3xl border border-white/10 bg-[#20211d] p-5 sm:p-8"
+            className="rounded-3xl border border-line bg-surface p-5 sm:p-8"
           >
             <div className="grid gap-5 sm:grid-cols-2">
 
               {/* Event Title */}
               <div className="sm:col-span-2">
-                <Label htmlFor="title" className="text-[#d7d8cf]">
+                <Label htmlFor="title" className="text-ink-soft">
                   Event title
                 </Label>
 
@@ -135,7 +135,7 @@ export default function CreateEventPage() {
 
               {/* Event Type */}
               <div>
-                <Label htmlFor="eventType" className="text-[#d7d8cf]">
+                <Label htmlFor="eventType" className="text-ink-soft">
                   Event type
                 </Label>
 
@@ -160,7 +160,7 @@ export default function CreateEventPage() {
 
               {/* Event Date */}
               <div>
-                <Label htmlFor="eventDate" className="text-[#d7d8cf]">
+                <Label htmlFor="eventDate" className="text-ink-soft">
                   Event date
                 </Label>
 
@@ -182,13 +182,13 @@ export default function CreateEventPage() {
                   aria-describedby={
                     dateError ? "event-date-error" : undefined
                   }
-                  className={`${fieldClassName} [color-scheme:dark]`}
+                  className={`${fieldClassName} [color-scheme:light] dark:[color-scheme:dark]`}
                 />
 
                 {dateError && (
                   <p
                     id="event-date-error"
-                    className="mt-2 text-xs text-[#f0875c]"
+                    className="mt-2 text-xs text-brand"
                   >
                     {dateError}
                   </p>
@@ -197,7 +197,7 @@ export default function CreateEventPage() {
 
               {/* Location */}
               <div className="sm:col-span-2">
-                <Label htmlFor="location" className="text-[#d7d8cf]">
+                <Label htmlFor="location" className="text-ink-soft">
                   Location
                 </Label>
 
@@ -212,7 +212,7 @@ export default function CreateEventPage() {
 
               {/* Thumbnail Image */}
               <div className="sm:col-span-2">
-                <Label htmlFor="thumbnail" className="text-[#d7d8cf]">
+                <Label htmlFor="thumbnail" className="text-ink-soft">
                   Thumbnail image URL
                 </Label>
 
@@ -228,7 +228,7 @@ export default function CreateEventPage() {
 
               {/* Description */}
               <div className="sm:col-span-2">
-                <Label htmlFor="description" className="text-[#d7d8cf]">
+                <Label htmlFor="description" className="text-ink-soft">
                   Description
                 </Label>
 
@@ -244,15 +244,15 @@ export default function CreateEventPage() {
             </div>
 
             {/* Submit Section */}
-            <div className="mt-7 flex flex-col gap-4 border-t border-white/[0.07] pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-7 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
 
-              <p className="text-xs text-[#8f9187]">
+              <p className="text-xs text-ink-muted">
                 The date must be in the future before the event can be posted.
               </p>
 
               <Button
                 type="submit"
-                className="h-11 rounded-full bg-[#ef8658] px-6 text-sm font-semibold text-[#1b1b18] hover:bg-[#f39a73]"
+                className="h-11 rounded-full bg-brand-fill px-6 text-sm font-semibold text-brand-foreground hover:bg-brand-fill-hover"
               >
                 Publish event
               </Button>
@@ -262,7 +262,7 @@ export default function CreateEventPage() {
             {submitted && (
               <p
                 role="status"
-                className="mt-5 rounded-xl border border-[#c8d9b5]/20 bg-[#c8d9b5]/10 px-4 py-3 text-sm text-[#c8d9b5]"
+                className="mt-5 rounded-xl border border-brand-green/20 bg-brand-green/10 px-4 py-3 text-sm text-brand-green"
               >
                 Event created. It is ready for the board.
               </p>
@@ -272,7 +272,7 @@ export default function CreateEventPage() {
             {submissionError && (
               <p
                 role="alert"
-                className="mt-5 rounded-xl border border-[#f0875c]/20 bg-[#f0875c]/10 px-4 py-3 text-sm text-[#f0875c]"
+                className="mt-5 rounded-xl border border-brand/20 bg-brand/10 px-4 py-3 text-sm text-brand"
               >
                 {submissionError}
               </p>

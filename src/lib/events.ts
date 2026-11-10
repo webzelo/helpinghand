@@ -27,10 +27,10 @@ export type EventInput = Omit<Event, "_id">;
 
 /** Dark input styling shared by the create and edit event forms. */
 export const fieldClassName =
-  "mt-2 h-10 border-white/10 bg-[#1a1b18] text-[#f4f4ec] placeholder:text-[#8f9187] focus-visible:border-[#c8d9b5]/60 focus-visible:ring-[#c8d9b5]/20";
+  "mt-2 h-10 border-line bg-input-bg text-ink placeholder:text-ink-muted focus-visible:border-brand-green/60 focus-visible:ring-brand-green/20";
 
 export const selectClassName =
-  "mt-2 h-10 w-full rounded-lg border border-white/10 bg-[#1a1b18] px-3 text-sm text-[#f4f4ec] outline-none transition-colors [color-scheme:dark] focus:border-[#c8d9b5]/60";
+  "mt-2 h-10 w-full rounded-lg border border-line bg-input-bg px-3 text-sm text-ink outline-none transition-colors [color-scheme:light] dark:[color-scheme:dark] focus:border-brand-green/60";
 
 /** `yyyy-MM-dd` for tomorrow in local time, used as the earliest valid date. */
 export function tomorrowDateString() {

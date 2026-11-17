@@ -15,7 +15,7 @@ export default async function FeaturedUpcomingEvents() {
   let events: Event[] = [];
 
   try {
-    const res = await fetch(`${EVENTS_API}/featured-upcoming-events`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/featured-upcoming-events`, {
       cache: "no-store",
     });
 

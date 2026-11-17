@@ -29,7 +29,7 @@ export default async function EventDetailsPage({
   const token = await getTokenFromServer()
 
   try {
-    res = await fetch(`${EVENTS_API}/manage-events/${id}`, {
+    res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/manage-events/${id}`, {
       // cache: "no-store",
       headers: {
         'Content-Type': 'application/json',

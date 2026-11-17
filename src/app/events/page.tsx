@@ -35,7 +35,7 @@ export default async function EventsPage() {
   let res: Response | null = null;
 
   try {
-    res = await fetch(`${EVENTS_API}/events`, { cache: "no-store" });
+    res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, { cache: "no-store" });
   } catch {
     error = `Could not load events from ${EVENTS_API}. Make sure the server is running.`;
   }

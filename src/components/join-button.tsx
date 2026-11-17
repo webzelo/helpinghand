@@ -51,7 +51,7 @@ export function JoinButton({
         return;
       }
 
-      const res = await fetch(`${EVENTS_API}/manage-events/${eventId}/join`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/manage-events/${eventId}/join`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

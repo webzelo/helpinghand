@@ -1,6 +1,6 @@
 import { format, parseISO } from "date-fns";
 
-export const EVENTS_API = "http://localhost:5000";
+export const EVENTS_API = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const EVENT_TYPES = [
   "Cleanup",

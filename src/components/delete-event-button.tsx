@@ -48,7 +48,7 @@ export function DeleteEventButton({
     }
 
     try {
-      const res = await fetch(`${EVENTS_API}/manage-events/${eventId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/manage-events/${eventId}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',

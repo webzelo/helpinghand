@@ -34,7 +34,7 @@ export default async function JoinedEventsPage() {
   let res: Response | null = null;
 
   try {
-    res = await fetch(`${EVENTS_API}/manage-events`, {
+    res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/manage-events`, {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
@@ -47,10 +47,11 @@ export default async function JoinedEventsPage() {
 
   if (res) {
     if (res.status === 401) {
-      redirect("/login");
-    }
-
-    if (!res.ok) {
+      // The token came from a live session, so this is the API rejecting it
+      // (usually a CLIENT_URL/JWKS mismatch), not a logged-out visitor.
+      error =
+        "The events API rejected your session token (401). Sign in again, and if it keeps happening the API server's CLIENT_URL is not pointing at this site's /api/auth/jwks.";
+    } else if (!res.ok) {
       error = `The events API responded with ${res.status}.`;
     } else {
       const events = (await res.json()) as Event[];

@@ -2,6 +2,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +16,8 @@ import {
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export default function CreateEventPage() {
+  const router = useRouter();
+
   // State management
   const tomorrow = tomorrowDateString();
   const [dateError, setDateError] = React.useState("");
@@ -27,8 +30,8 @@ export default function CreateEventPage() {
   ) => {
     event.preventDefault();
 
-    const token = await getTokenFromClient()
-
+    // `event.currentTarget` is null once this handler yields, so grab the form
+    // and its data before any `await`.
     const form = event.currentTarget;
 
     // Reset previous messages
@@ -50,12 +53,19 @@ export default function CreateEventPage() {
 
     setDateError("");
 
+    const token = await getTokenFromClient();
+
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
     // Convert form data into an object
     const formObject = Object.fromEntries(formData.entries());
 
     try {
       // Send data to backend
-      const res = await fetch("http://localhost:5000/create-event", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-event`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
